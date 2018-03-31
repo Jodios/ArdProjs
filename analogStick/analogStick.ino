@@ -9,9 +9,10 @@ void setup() {
   pinMode(RED, OUTPUT);
   pinMode(GREEN, OUTPUT);
   pinMode(BLUE, OUTPUT);
-  Serial.begin(9600);
+//  Serial.begin(9600);
 
 }
+
 
 void loop() {
 
@@ -24,20 +25,28 @@ void loop() {
 
   x = map(x, 0, 1023, -512, 512);
   y = map(y, 0, 1023, -512, 512);
-  double ax = static_cast<double>(x / 512);
-  double ay = static_cast<double>(y / 512);
+  angle = atan2(y, x);
+  angle = angle * CONVERSION; 
+  angle = map(angle, -180, 180, 0, 360);
 
-  if (x != 0.0 && y != 0.0)
-  {
-    angle = atan2(y, x);
-  }
-  Serial.print("Radians: "); Serial.println(angle * CONVERSION);
-  Serial.print("Angle: "); Serial.println(angle);
-  Serial.print("X: "); Serial.println(x);
-  Serial.print("Y: "); Serial.println(y);
-  Serial.print("AX: "); Serial.println(ax);
-  Serial.print("AY: "); Serial.println(ay);
-  Serial.println("==============================");
+  r = abs(256 * cos(angle));
+  g = abs(256 * cos(angle + 120));
+  b = abs(256 * cos(angle - 120));
+  
+  analogWrite(RED, r);
+  analogWrite(GREEN, g);
+  analogWrite(BLUE, b);
+//  Serial.println(rgb[0]);
+//  Serial.println(rgb[1]);
+//  Serial.println(rgb[2]);
+
+ 
+  
+//  Serial.print("Radians: "); Serial.println(angle);
+//  Serial.print("Angle: "); Serial.println(angle);
+//  Serial.print("X: "); Serial.println(x);
+//  Serial.print("Y: "); Serial.println(y);
+//  Serial.println("==============================");
 
 
 
